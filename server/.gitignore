@@ -1,0 +1,8 @@
+
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+node_modules
+build
+.env
+yarn.lock
