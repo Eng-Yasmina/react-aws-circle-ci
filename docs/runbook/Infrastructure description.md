@@ -2,11 +2,11 @@
 | :---------: | :-------------------------------: |
 | Runbook description|   This runbook Configure infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.   |
 | On this page       |                 Table of contents                  |
-|                       |- [Architecture Diagrams For An Overview Of Tthe Pipeline Process](#architecture-diagrams-for-an-overview-of-the-pipeline-process)                                                       |
+|                       |- [Architecture Diagrams For An Overview Of Tthe Pipeline Process](#architecture-diagram-for-an-overview-of-the-pipeline-process)                                                       |
 |                       |- [Configure Secrets (Environment Variables) Via CircleCI](#configure-secrets-environment-variables-via-circleci)
 
 
-# Architecture diagrams for an overview of the infrastructure
+# Architecture diagram for an overview of the infrastructure
 ![aws-diagram.jpg](../screenshots/FronendS3/AWS-diagram.jpg)
 # Steps to Configureing infrastructure for deployment
 ## 1. In AWS console, Create a new IAM user. 

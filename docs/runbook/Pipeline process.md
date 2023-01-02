@@ -89,27 +89,17 @@ jobs:
           name: API test
           command: cd server && npm run test
 ```
-## - Make the pipeline run the front-end unit tests
-```yml
-      # TODO: Test the frontend
-      - run:
-          name: Front-End test
-          command: cd client && npm run test
-      # TODO: Test the API
-      - run:
-          name: API test
-          command: cd server && npm run test
-```
+
 # - Configure secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
 1. ```AWS_BUCKET```: S3 bucket used to host static front-end
 2. ```AWS_S3_ENDPOINT```: the url of S# hosted app
 3. ```AWS_ACCESS_KEY_ID```, ```AWS_SECRET_ACCESS_KEY``` :are both AWS user credentials
 4. ```AWS_DEFUALT_REGION```: the AWS region i used
-4. ```POSTGRES_HOST```: RSD database url
-5. ```POSTGRES_DB```: name of the database i've created on RDS
-6. ```POSTGRES_USERNAME```: the username i entered while creating the database on RDS
-7. ```POSTGRES_PASSWORD```: the password i entered while creating the database on RDS
-8. ```DB_PORT```: port of the database i've created on RDS
+5. ```POSTGRES_HOST```: RSD database url
+6. ```POSTGRES_DB```: name of the database i've created on RDS
+7. ```POSTGRES_USERNAME```: the username i entered while creating the database on RDS
+8. ```POSTGRES_PASSWORD```: the password i entered while creating the database on RDS
+9. ```DB_PORT```: port of the database i've created on RDS
 
 
 ## - Trigger a successful pipeline on each push to the main branch:
