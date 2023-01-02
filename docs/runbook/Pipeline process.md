@@ -90,7 +90,7 @@ jobs:
           command: cd server && npm run test
 ```
 
-# - Configure secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
+# Configure secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
 1. ```AWS_BUCKET```: S3 bucket used to host static front-end
 2. ```AWS_S3_ENDPOINT```: the url of S# hosted app
 3. ```AWS_ACCESS_KEY_ID```, ```AWS_SECRET_ACCESS_KEY``` :are both AWS user credentials
