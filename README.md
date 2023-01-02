@@ -37,9 +37,9 @@ to install the node_modules.
 ```bash
 npm install
 ```
-After installation is done start the api in dev mode with:
+After installation is done start the react app with:
 ```bash
-npm run dev
+npm run start
 ```
 - Configure infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.
     - Set up AWS s3 for web hosting via AWS CLI
