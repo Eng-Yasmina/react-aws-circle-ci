@@ -88,7 +88,7 @@ npm run start
     workflows:
         circle-ci-pipeline:
             jobs:
-            - build
+            - build:
                 filters:
                     branches:
                         only: main

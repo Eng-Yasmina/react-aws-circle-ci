@@ -61,7 +61,7 @@ jobs:
 workflows:
   circle-ci-pipeline:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               only: main
