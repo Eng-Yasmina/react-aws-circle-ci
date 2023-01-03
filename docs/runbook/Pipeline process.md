@@ -1,25 +1,18 @@
-| Runbook name       |             Automation and pipeline process    |
-| :----:         |                        :-----:  |
-| Runbook description|   This runbook Configures a CircleCI pipeline to automate the deployments and continuously checks the build/unit tests for each push instance to the GitHub repo until the status ```success``` is returned.   |                           
-|On this page       |                 Table of contents :
-|  |- [Architecture Diagram For An Overview Of Tthe Pipeline Process](#architecture-diagram-for-an-overview-of-the-pipeline-process)
-|  |- [Steps to Configuring Continuous Integration Pipeline with Github](#steps-to-configuring-continuous-integration-pipeline-with-github)
-|  |- [Configuring CircleCI pipeline with AWS S3, RDS and Elastic Beanstalk](#configure-secrets-environment-variables-via-circleci-to-configure-circleci-pipeline-with-aws-s3-rds-and-elastic-beanstalk)
+# Runbook name
+Automation and pipeline process.
 
- 
+# Runbook description
+This runbook configures a CircleCI pipeline to automate the deployments and continuously checks the build/unit tests for each push instance to the GitHub repo until the status ```success``` is returned.                          
 
-# Architecture diagram for an overview of the pipeline process
-![circle-ci-diagram.png](../screenshots/CircleCi/CircleCi-diagram.jpg)
-
-# Steps to Configuring Continuous Integration Pipeline with Github
-## - Write a pipeline file using the config.yml format used by CircleCi
+# Steps to Configuring Continuous Integration Pipeline
+### 1- I configured the orbs in a pipeline file using the config.yml format used by CircleCi to download AWS CLI and Elastic Beanstalk CLI at first:
 ```yml
-version: 2.1
-
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
   eb: circleci/aws-elastic-beanstalk@1.0.0
-
+```
+### 2- I configered the first job and called it build and made it begins with downloading Node.js version (18.12.1) at first then download the dependencies found in package.json file to form a node-modules folder, and then run the build scripts in both frontend and API:
+```yml
 jobs:
   build:
     docker:
@@ -42,35 +35,8 @@ jobs:
       - run:
           name: API Build
           command: cd server && npm run build
-
-  deploy:
-    docker:
-      - image: cimg/node:18.12.1
-      # more setup needed for aws, elastic beanstalk
-    steps:
-      - eb/setup
-      - aws-cli/setup
-      - checkout
-      - run:
-          name: Install Front-End Dependencies
-          command: cd client && npm install
-      - run:
-          name: Install API Dependencies
-          command: cd server && npm install
-      - run:
-          name: Deploy App
-          # TODO: Install, build, deploy in both apps
-          command: cd client && npm run deploy
-            
-workflows:
-  circle-ci-pipeline:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
 ```
-## - Make the pipeline run the front-end unit tests
+### 3- I made the pipeline run the front-end unit tests:
 ```yml
 jobs:
   build:
@@ -89,8 +55,18 @@ jobs:
           name: API test
           command: cd server && npm run test
 ```
-
-# Configure secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
+# Steps to Configuring CircleCI with Github
+### 1- I configured my CircleCI through config.yml so that only pushes to the main branch would trigger build by utilizing the job filters feature in the workflow to set that up:
+```yml
+workflows:
+  circle-ci-pipeline:
+    jobs:
+      - build
+          filters:
+            branches:
+              only: main
+```
+### 2- I configured secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
 1. ```AWS_BUCKET```: S3 bucket used to host static front-end
 2. ```AWS_S3_ENDPOINT```: the url of S# hosted app
 3. ```AWS_ACCESS_KEY_ID```, ```AWS_SECRET_ACCESS_KEY``` :are both AWS user credentials
@@ -102,10 +78,9 @@ jobs:
 9. ```DB_PORT```: port of the database i've created on RDS
 
 
-## - Trigger a successful pipeline on each push to the main branch:
+### 3- I triggered a successful pipeline on each push to the main branch:
 ![circleci.jpg](../screenshots/CircleCi/screencapture-circleci-pipelines-github-Eng-Yasmina-react-aws-circle-ci-jobs-3-steps.png)
 
 
-## - Make Pull Requests builds so that each time i open a pull request against the main branch, my tests and build are executed.
-![circleci-production.jpg](../screenshots/CircleCi/screencapture-app-circleci-pipelines-github-Eng-Yasmina-react-aws-circle-ci.png)
-![circleci-production.jpg](../screenshots/CircleCi/screencapture-circleci-pipelines-github-Eng-Yasmina-react-aws-circle-ci.png)
+# Architecture diagram for an overview of the pipeline process
+![circle-ci-diagram.png](../screenshots/CircleCi/CircleCi-diagram.jpg)

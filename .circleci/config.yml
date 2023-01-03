@@ -58,6 +58,9 @@ workflows:
   circle-ci-pipeline:
     jobs:
       - build
+          filters:
+            branches:
+              only: main
       - deploy:
           requires:
             - build
