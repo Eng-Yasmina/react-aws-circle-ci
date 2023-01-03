@@ -2,7 +2,7 @@
 Infrastructure description to Host my full stack app
 
 # Runbook description
-This runbook Configure infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.
+This runbook configures infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.
 
 
 # Steps to Configureing infrastructure for deployment
@@ -42,7 +42,7 @@ aws s3api create-bucket --bucket yasmina-bucket-1 --region us-east-1
 
 ![s3-static-website.jpg](../screenshots/FronendS3/screencapture-s3-console--yasmina-bucket-1-property-website-edit.png)
 
-- Upload the static files via deploy script in the package.json scripts:
+- I upload the static files via deploy script in the package.json scripts:
 ```json
 {
     "scripts": {
@@ -72,7 +72,7 @@ I use the infrastructure because it provides an easy solution to hide the follow
 ```bash
 eb init yasmina-api-aws --platform node.js --region us-east-1
 ```
-2. I created Environment:
+2. I created an environment:
 ```bash
 eb create --sample yasmina-api-aws-dev
 ```

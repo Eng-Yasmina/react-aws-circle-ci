@@ -2,7 +2,7 @@
 Automation and pipeline process.
 
 # Runbook description
-This runbook configures a CircleCI pipeline to automate the deployments and continuously checks the build/unit tests for each push instance to the GitHub repo until the status ```success``` is returned.                          
+This runbook configures a CircleCI pipeline to automate the deployments and continuously triggers the build/unit tests for each push instance to the main branch until the status ```success``` is returned.                          
 
 # Steps to Configuring Continuous Integration Pipeline
 ### 1- I configured the orbs in a pipeline file using the config.yml format used by CircleCi to download AWS CLI and Elastic Beanstalk CLI at first:
