@@ -3,6 +3,12 @@ This project is about deploying a Full-Stack application built for a retailer to
 
 ***[read my runbook for more details about the automation, pipeline process and configuring the Infrastructure.](https://github.com/Eng-Yasmina/react-aws-circle-ci/tree/main/docs/runbook)***
 
+## Architecture diagram for an overview of the infrastructure :
+![aws-diagram.jpg](./docs/screenshots/FronendS3/AWS-diagram.jpg)
+
+## Architecture diagram for an overview of the pipeline process :
+![circle-ci-diagram.png](./docs/screenshots/CircleCi/CircleCi-diagram.jpg)
+
 # Dependencies
 - Node v18.12.11 (LTS) or more recent.
 
@@ -17,7 +23,7 @@ This project is about deploying a Full-Stack application built for a retailer to
 - A S3 bucket for hosting uploaded pictures.
 
 # Installation
-- From the root of the repo, navigate to the server:
+1. From the root of the repo, navigate to the server:
 ```bash
 cd server
 ```
@@ -41,8 +47,8 @@ After installation is done start the react app with:
 ```bash
 npm run start
 ```
-- Configure infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.
-    - Set up AWS s3 for web hosting via AWS CLI
+2. Configure infrastructure needs (RDS, S3, Elastic Beanstalk) using the AWS console and AWS CLI and deploy the app to those services.
+    - Set up AWS s3 for web hosting via AWS CLI:
     ```bash
     aws s3api create-bucket --bucket yasmina-bucket-1 --region us-east-1
     ```
@@ -52,16 +58,14 @@ npm run start
     ```bash
     eb init yasmina-api-aws --platform node.js --region us-east-1
     ```
-    ## Architecture diagram for an overview of the infrastructure
-![aws-diagram.jpg](./docs/screenshots/FronendS3/AWS-diagram.jpg)
 
 ***[Read the step-by-step Infrastructure description runbook for more details about each step.](https://github.com/Eng-Yasmina/react-aws-circle-ci/blob/main/docs/runbook/Infrastructure%20description.md)***
 
 
-- Configure a CircleCI pipeline to automate the deployments and continuously checks the build/unit tests for each push instance to the GitHub repo until the status ```success``` is returned.
+3. Configure a CircleCI pipeline to automate the deployments and continuously checks the build/unit tests for each push instance to the GitHub repo until the status ```success``` is returned.
     - Write a pipeline file using the config.yml format used by CircleCi
     - Make the pipeline run the front-end unit tests
-    ```yml
+     ```yml
     jobs:
       build:
        docker:
@@ -79,6 +83,16 @@ npm run start
           name: API test
           command: cd server && npm run test
     ```
+    - Configure CircleCI through config.yml so that only pushes to the main branch would trigger build by utilizing the job filters feature in the workflow to set that up:
+    ```yml
+    workflows:
+        circle-ci-pipeline:
+            jobs:
+            - build
+                filters:
+                    branches:
+                        only: main
+    ```
     - Configure secrets (Environment Variables) via CircleCI to configure CircleCI pipeline with AWS S3 RDS and Elastic Beanstalk
     1. ```AWS_BUCKET```: S3 bucket used to host static front-end
     2. ```AWS_S3_ENDPOINT```: the url of S# hosted app
@@ -93,8 +107,8 @@ npm run start
     - Trigger a successful pipeline on each push to the main branch:
     ![circleci.jpg](./docs/screenshots/CircleCi/screencapture-circleci-pipelines-github-Eng-Yasmina-react-aws-circle-ci-jobs-3-steps.png)
 
-    ## Architecture diagram for an overview of the pipeline process
-![circle-ci-diagram.png](./docs/screenshots/CircleCi/CircleCi-diagram.jpg)
+
+
 
 ***[Read the step-by-step Pipeline process runbook for more details about each step.](https://github.com/Eng-Yasmina/react-aws-circle-ci/blob/main/docs/runbook/Pipeline%20process.md)***
 
